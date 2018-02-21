@@ -1,3 +1,4 @@
+import java.util.OptionalInt;
 import java.util.Random;
 import java.util.function.*;
 import java.util.stream.IntStream;
@@ -39,6 +40,12 @@ public class OperacionesIntStream {
     public void mostrarValoresFuncional2(){
         IntStream.of(valores).forEach(valor -> System.out.printf("%d", valor));
         System.out.println();
+    }
+
+    public void obtenerMinimo(){
+        // El tipo OptionalInt actúa como wrapper para el caso en el que la colección esté vacía
+        OptionalInt minimo = IntStream.of(valores).min();
+        int entero_minimo = minimo.getAsInt();
     }
 
     public static void main(String args[]){
