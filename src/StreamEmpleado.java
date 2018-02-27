@@ -1,5 +1,6 @@
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.Optional;
 import java.util.function.Predicate;
 
 public class StreamEmpleado {
@@ -24,5 +25,8 @@ public class StreamEmpleado {
 
         // Filtrado + ordenación + mostrado por pantalla
         Arrays.stream(empleados).filter(rango_sueldo).sorted(comparador_sueldo).forEach(System.out::println);
+
+        // Obtener primer elemento que cumple una condición
+        Empleado empleado_obtenido = Arrays.stream(empleados).filter(rango_sueldo).sorted(comparador_sueldo).findFirst().get();
     }
 }
