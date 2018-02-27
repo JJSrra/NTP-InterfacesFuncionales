@@ -1,3 +1,4 @@
+import java.util.OptionalDouble;
 import java.util.OptionalInt;
 import java.util.Random;
 import java.util.function.*;
@@ -77,8 +78,50 @@ public class OperacionesIntStream {
         System.out.println("Producto total: " + producto);
     }
 
+    // Obtención de producto ampliado (para evitar desbordamiento)
+    public void obtenerProductoAmpliado(){
+        double producto = IntStream.of(valores).asDoubleStream().reduce(1,(x, y) -> {
+            System.out.println("Valores de x e y: " + x + " " + y);
+            return x * y;
+        });
+        System.out.println("Producto total: " + producto);
+    }
+
+    // Suma de valores al cuadrado
+    public void obtenerSumaCuadrados(){
+        double suma = IntStream.of(valores).asDoubleStream().reduce(0, (x, y) -> {
+            y = y*y;
+            System.out.println("Valores de x² e y²: " + x + " " + y);
+            return x + y;
+        });
+        System.out.println("Suma total de cuadrados: " + suma);
+    }
+
+    // Obtención de la media
+    public void obtenerMedia(){
+        OptionalDouble media = IntStream.of(valores).average();
+        System.out.println("Media: " + media.getAsDouble());
+    }
+
+    // Filtrado de valores pares
+    public void filtrarValoresPares(){
+        int[] filtrado = IntStream.of(valores).filter(x -> x % 2 == 0).toArray();
+    }
+
+    // Filtrar valores pares y ordenar
+    public void filtrarValoresParesYOrdenar(){
+        int[] filtrado_y_ordenado = IntStream.of(valores).filter(x -> x % 2 == 0).sorted().toArray();
+    }
+
+    // Filtrar pares y mayores que un valor
+    public void filtrarValoresParesMayoresQue(int valor){
+        IntPredicate par = x -> x % 2 == 0;
+        IntPredicate mayor_que = x -> x > valor;
+        IntStream.of(valores).filter(par.and(mayor_que)).sorted().forEach(System.out::println);
+    }
+
     public static void main(String args[]){
-        OperacionesIntStream objetos = new OperacionesIntStream(5);
-        objetos.obtenerProductoReduce();
+        OperacionesIntStream objetos = new OperacionesIntStream(20);
+        objetos.filtrarValoresParesMayoresQue(20);
     }
 }
