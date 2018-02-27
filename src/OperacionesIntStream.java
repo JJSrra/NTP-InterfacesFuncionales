@@ -2,6 +2,7 @@ import java.util.OptionalDouble;
 import java.util.OptionalInt;
 import java.util.Random;
 import java.util.function.*;
+import java.util.stream.DoubleStream;
 import java.util.stream.IntStream;
 import java.util.stream.LongStream;
 
@@ -118,6 +119,11 @@ public class OperacionesIntStream {
         IntPredicate par = x -> x % 2 == 0;
         IntPredicate mayor_que = x -> x > valor;
         IntStream.of(valores).filter(par.and(mayor_que)).sorted().forEach(System.out::println);
+    }
+
+    // Convertir colección
+    public void convertirColección(){
+        double[] resultado = IntStream.of(valores).filter(x -> x % 2 == 0).mapToDouble(x -> x*1.5).toArray();
     }
 
     public static void main(String args[]){
