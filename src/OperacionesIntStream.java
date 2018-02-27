@@ -2,6 +2,7 @@ import java.util.OptionalInt;
 import java.util.Random;
 import java.util.function.*;
 import java.util.stream.IntStream;
+import java.util.stream.LongStream;
 
 public class OperacionesIntStream {
     private int valores[];
@@ -48,7 +49,36 @@ public class OperacionesIntStream {
         int entero_minimo = minimo.getAsInt();
     }
 
+    public void obtenerMaximo(){
+        // Igual que para mínimo. Ahora nos vamos a asegurar de que es un entero
+        OptionalInt maximo = IntStream.of(valores).max();
+        if (maximo.isPresent()){
+            int entero_maximo = maximo.getAsInt();
+            System.out.printf("Máximo: %d", entero_maximo);
+        }
+    }
+
+    // Suma mediante operación reduce
+    public void obtenerSumaReduce(){
+        // Elemento identidad es 0 para que la primera operación sea sumar 0 al primer elemento
+        int suma = IntStream.of(valores).reduce(0, (x, y) -> {
+            System.out.println("Valores de x e y: " + x + " " + y);
+            return x + y;
+        });
+        System.out.println("Suma total: " + suma);
+    }
+
+    // Obtención de producto con reduce
+    public void obtenerProductoReduce(){
+        int producto = IntStream.of(valores).reduce(1, (x, y) -> {
+            System.out.println("Valores de x e y: " + x + " " + y);
+            return x * y;
+        });
+        System.out.println("Producto total: " + producto);
+    }
+
     public static void main(String args[]){
-        OperacionesIntStream objetos = new OperacionesIntStream(1000);
+        OperacionesIntStream objetos = new OperacionesIntStream(5);
+        objetos.obtenerProductoReduce();
     }
 }
