@@ -18,11 +18,11 @@ public class Empleado {
 
    // Constructor
    public Empleado(String nombre, String primerApellido,
-           double sueldo, String dapartamento) {
+           double sueldo, String departamento) {
       this.nombre = nombre;
       this.primerApellido = primerApellido;
       this.sueldo = sueldo;
-      this.departmento = dapartamento;
+      this.departmento = departamento;
    }
 
    // Metodo para asignar el nombre
