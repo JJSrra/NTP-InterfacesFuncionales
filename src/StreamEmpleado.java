@@ -66,5 +66,74 @@ public class StreamEmpleado {
             System.out.println(entrada.getKey());
             entrada.getValue().forEach(System.out::println);
         });
+
+        // Implementar esta tarea SIN programación funcional
+        Map<String, List<Empleado>> agrupamiento = new HashMap<>();
+        String departamento;
+        List<Empleado> listaEmpleados;
+        // Considerar cada empleado de la colección
+        for (int i=0; i < empleados.length; ++i){
+            // Obtener su departamento
+            departamento = empleados[i].obtenerDepartamento();
+
+            // Comprobar si existe esa clave en el mapa
+            listaEmpleados = agrupamiento.get(departamento);
+
+            // Si no existe lista para ese departamento, hay que crearla
+            if (listaEmpleados == null){
+                listaEmpleados = new LinkedList<>();
+                listaEmpleados.add(empleados[i]);
+
+                // Meto la lista en el mapa
+                agrupamiento.put(departamento,listaEmpleados);
+            }
+
+            // Si ya existía la lista
+            else{
+                listaEmpleados.add(empleados[i]);
+            }
+        }
+        // Se itera sobre la colección para imprimir los datos
+        Iterator<String> claves = agrupamiento.keySet().iterator();
+        String clave;
+        while (claves.hasNext()){
+            clave = claves.next();
+            System.out.println(clave);
+
+            // Listado completo de empleados de la clave
+            listaEmpleados = agrupamiento.get(clave);
+
+            // Se itera sobre la colección
+            for (Empleado e : listaEmpleados){
+                System.out.println(e);
+            }
+        }
+        //****************************************************
+        // Mucho más complejo que en programación funcional!!!
+        //****************************************************
+
+        //-----------------------------------------------------------------------------------
+
+        // Agrupamiento con funcionalidad completa (especificando tipo de mapa que quiero crear)
+        System.out.println("Departamentos y su número de empleados:");
+        // Para este caso quiero un map de departamentos con el número de empleados por departamento
+        // Segundo argumento de groupingBy: cómo es el mapa resultante
+        // Tercer argumento de groupingBy: cómo reducir la lista
+        // Resultado devuelto: TreeMap<String,Long>
+        TreeMap<String, Long> contadorDepartamentos = Arrays.stream(empleados).
+                collect(Collectors.groupingBy(Empleado::obtenerDepartamento, TreeMap::new, Collectors.counting()));
+
+        // Iteración sobre la colección
+        contadorDepartamentos.entrySet().stream().forEach(entrada -> {
+            System.out.println(entrada.getKey() + " tiene " + entrada.getValue() + " empleados");
+        });
+        
+        // Sumar los sueldos de todos los empleados
+        double suma_sueldos = Arrays.stream(empleados).mapToDouble(Empleado::obtenerSueldo).sum();
+
+        // Obtener la media de sueldos
+        double media_sueldos = Arrays.stream(empleados).mapToDouble(Empleado::obtenerSueldo).average().getAsDouble();
+
+
     }
 }
